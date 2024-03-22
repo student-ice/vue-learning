@@ -1,5 +1,32 @@
 <script setup>
-import { UserFilled, Lock } from '@element-plus/icons-vue'
+import { UserFilled, Lock } from "@element-plus/icons-vue";
+import { ref, reactive } from "vue";
+
+const ruleFormRefLogin = ref(null);
+const ruleFormLogin = reactive({
+  username: "",
+  password: "",
+});
+
+const rulesLogin = {
+  username: [
+    { required: true, message: "请输入用户名", trigger: "blur" },
+    { min: 6, max: 15, message: "长度应为6-15位", trigger: "blur" },
+  ],
+  password: [
+    { required: true, message: "请输入密码", trigger: "blur" },
+    { min: 6, max: 15, message: "长度应为6-15位", trigger: "blur" },
+  ],
+};
+
+const loginHandle = () => {
+  ruleFormRefLogin.value.validate(isValid => {
+    if (!isValid) {
+      console.log("表单无效");
+      return;
+    }
+  });
+};
 </script>
 
 <template>
@@ -10,10 +37,10 @@ import { UserFilled, Lock } from '@element-plus/icons-vue'
         <span>技术支持</span>
       </el-col>
       <el-col :lg="8" :md="12" class="col-right">
-        <h1>登录</h1>
-        <el-form class="login-form">
-          <el-form-item>
-            <el-input placeholder="请输入用户名" >
+        <h1 style="margin-bottom: 20px;">登录</h1>
+        <el-form class="login-form" ref="ruleFormRefLogin" :model="ruleFormLogin" :rules="rulesLogin">
+          <el-form-item prop="username">
+            <el-input v-model="ruleFormLogin.username" placeholder="请输入用户名">
               <template #prefix>
                 <el-icon>
                   <UserFilled />
@@ -21,8 +48,8 @@ import { UserFilled, Lock } from '@element-plus/icons-vue'
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item>
-            <el-input placeholder="请输入密码" >
+          <el-form-item prop="password">
+            <el-input v-model="ruleFormLogin.password" placeholder="请输入密码">
               <template #prefix>
                 <el-icon>
                   <Lock />
@@ -31,7 +58,7 @@ import { UserFilled, Lock } from '@element-plus/icons-vue'
             </el-input>
           </el-form-item>
         </el-form>
-        <el-button type="primary">登录</el-button>
+        <el-button type="primary" @click="loginHandle">登录</el-button>
       </el-col>
     </el-row>
   </div>
@@ -45,15 +72,18 @@ import { UserFilled, Lock } from '@element-plus/icons-vue'
   justify-content: center;
   flex-direction: column;
 }
+
 .col-right {
-  background:#fff;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
   .login-form {
     width: 240px;
   }
+
   .el-button {
     width: 240px;
   }
