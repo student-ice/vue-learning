@@ -1,6 +1,11 @@
 <script setup>
 import { UserFilled, Lock } from "@element-plus/icons-vue";
 import { ref, reactive } from "vue";
+import { login } from "@/api/login.js";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const ruleFormRefLogin = ref(null);
 const ruleFormLogin = reactive({
@@ -20,11 +25,22 @@ const rulesLogin = {
 };
 
 const loginHandle = () => {
-  ruleFormRefLogin.value.validate(isValid => {
+  ruleFormRefLogin.value.validate(async isValid => {
     if (!isValid) {
       console.log("表单无效");
       return;
     }
+    const res = await login(ruleFormLogin)
+    if (!res.data || res.data.status !== 200) {
+      return ElMessage.error(res.msg)
+    }
+    console.log(res);
+    ElMessage({
+      message: "登录成功",
+      type: "success"
+    })
+    window.sessionStorage.setItem("token", res.data.token);
+    router.push("/home");
   });
 };
 </script>

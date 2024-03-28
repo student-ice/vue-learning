@@ -9,6 +9,11 @@ const routes = [
         path: "/:pathMatch(.*)*",
         name: "NotFound",
         component: () => import("@/views/404.vue")
+    },
+    {
+        path: "/home",
+        name: "home",
+        component: () => import("@/views/Home.vue")
     }
 ]
 const router = createRouter({
