@@ -9,10 +9,6 @@ onBeforeMount(async () => {
   if (!res.data || res.data.status !== 200) {
     return ElMessage.error("获取管理员信息失败");
   }
-  ElMessage({
-    message: "登录成功",
-    type: "success",
-  });
 });
 </script>
 
