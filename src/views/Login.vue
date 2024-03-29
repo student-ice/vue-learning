@@ -34,7 +34,6 @@ const loginHandle = () => {
     if (!res.data || res.data.status !== 200) {
       return ElMessage.error(res.msg)
     }
-    console.log(res);
     ElMessage({
       message: "登录成功",
       type: "success"

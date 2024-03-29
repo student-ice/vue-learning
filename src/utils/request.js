@@ -6,6 +6,10 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(config => {
+  const token = window.sessionStorage.getItem("token");
+  if (token) {
+    config.headers['token'] = token;
+  }
   return config;
 })
 

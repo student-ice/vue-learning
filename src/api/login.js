@@ -7,3 +7,10 @@ export const login = (data) => {
     data
   })
 }
+
+export const getUserInfo = () => {
+  return request({
+    url: "admin/getUserInfo",
+    method: "POST"
+  })
+}
