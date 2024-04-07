@@ -7,6 +7,8 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+const loading = ref(false);
+
 const ruleFormRefLogin = ref(null);
 const ruleFormLogin = reactive({
   username: "",
@@ -26,20 +28,28 @@ const rulesLogin = {
 
 const loginHandle = () => {
   ruleFormRefLogin.value.validate(async isValid => {
-    if (!isValid) {
-      console.log("表单无效");
-      return;
+    try {
+
+      if (!isValid) {
+        console.log("表单无效");
+        return;
+      }
+      loading.value = true;
+      const res = await login(ruleFormLogin)
+      if (!res.data || res.data.status !== 200) {
+        return ElMessage.error(res.msg)
+      }
+      ElMessage({
+        message: "登录成功",
+        type: "success"
+      })
+      window.sessionStorage.setItem("token", res.data.token);
+      router.push("/home");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      loading.value = false;
     }
-    const res = await login(ruleFormLogin)
-    if (!res.data || res.data.status !== 200) {
-      return ElMessage.error(res.msg)
-    }
-    ElMessage({
-      message: "登录成功",
-      type: "success"
-    })
-    window.sessionStorage.setItem("token", res.data.token);
-    router.push("/home");
   });
 };
 </script>
@@ -73,7 +83,7 @@ const loginHandle = () => {
             </el-input>
           </el-form-item>
         </el-form>
-        <el-button type="primary" @click="loginHandle">登录</el-button>
+        <el-button type="primary" @click="loginHandle" :loading="loading">登录</el-button>
       </el-col>
     </el-row>
   </div>
