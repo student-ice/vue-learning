@@ -8,7 +8,7 @@ export const login = (data) => {
   })
 }
 
-export const getUserInfo = () => {
+export const getUserInfoFn = () => {
   return request({
     url: "admin/getUserInfo",
     method: "POST"

@@ -1,7 +1,6 @@
 <script setup>
-import { getUserInfo } from "@/api/login.js";
+
 import { onBeforeMount } from "vue";
-import { ElMessage } from "element-plus";
 
 onBeforeMount(async () => {
 });

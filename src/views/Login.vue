@@ -1,13 +1,10 @@
 <script setup>
 import { UserFilled, Lock } from "@element-plus/icons-vue";
 import { ref, reactive } from "vue";
-import { getUserInfo, login } from "@/api/login.js";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-import { useUserStore } from "@/store/index.js";
 
 const router = useRouter();
-const userStore = useUserStore();
 const loading = ref(false);
 
 const ruleFormRefLogin = ref(null);
@@ -45,11 +42,6 @@ const loginHandle = () => {
         type: "success"
       })
       window.sessionStorage.setItem("token", res.data.token);
-      const res2 = await getUserInfo();
-      if (!res2.data || res2.data.status !== 200) {
-        return ElMessage.error("获取管理员信息失败");
-      }
-      userStore.setUserInfo(res.data);
       router.push("/home");
     } catch (err) {
       console.log(err);
