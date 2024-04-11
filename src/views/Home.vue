@@ -2,7 +2,10 @@
 import { ElMessageBox } from "element-plus";
 import { onBeforeMount } from "vue";
 import { useUserStore } from "@/store/index.js";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
+import Header from "@/components/Header.vue";
+import Menu from "@/components/Menu.vue";
+import TagMenu from "@/components/TagMenu.vue";
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -36,10 +39,36 @@ const logout = async () => {
 </script>
 
 <template>
-  <h1>首页</h1>
-  <el-button @click="logout">退出登录</el-button>
+<!--  <h1>首页</h1>-->
+<!--  <el-button @click="logout">退出登录</el-button>-->
+  <div style="height: 100%">
+    <el-container style="height: 100%">
+      <el-header>
+        <Header />
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <Menu />
+        </el-aside>
+        <el-main>
+          <TagMenu />
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+.el-header {
+  background: #409EFF;
+}
 
+.el-main {
+  background: #F2F4F5;
+}
+
+.el-aside {
+  height: 100%;
+}
 </style>
