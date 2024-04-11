@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 import { useUserStore } from "@/store/index.js";
+import nProgress from "nprogress"
 
 const routes = [
     {
@@ -24,6 +25,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async(to,from,next) => {
+    nProgress.start();
     const token = window.sessionStorage.getItem("token");
     if (token) {
         if (to.path === "/login") {
@@ -40,6 +42,10 @@ router.beforeEach(async(to,from,next) => {
             next('/login')
         }
     }
+})
+
+router.afterEach((to,from) => {
+    nProgress.done();
 })
 
 export default router

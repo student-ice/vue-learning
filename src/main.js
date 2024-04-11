@@ -5,6 +5,7 @@ import Router from './router/index.js'
 import ElementPlus from 'element-plus'
 import { createPinia } from "pinia";
 import 'element-plus/dist/index.css'
+import "nprogress/nprogress.css"
 
 const app = createApp(App);
 app.use(createPinia())
