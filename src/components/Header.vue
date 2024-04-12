@@ -71,11 +71,15 @@ const userStore = useUserStore();
   }
 
   .icon {
-    width: 20px;
+    width: 30px;
     height: 100%;
     cursor: pointer;
     font-size: 18px;
     font-weight: bold;
+  }
+
+  .icon:hover {
+    background-color: #065327;
   }
 
 }
