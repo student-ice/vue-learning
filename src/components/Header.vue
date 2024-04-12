@@ -1,26 +1,36 @@
 <script setup>
 import { useUserStore } from "@/store/index.js";
 import { ArrowDown, Fold, FullScreen, Refresh } from "@element-plus/icons-vue";
+import { useFullscreen} from "@vueuse/core";
 
+const { toggle, isFullscreen } = useFullscreen()
 const userStore = useUserStore();
+
+const refresh = () => {
+  location.reload()
+}
 </script>
 
 <template>
-<div class="header">
+  <div class="header">
   <span class="logo">
     商城后台管理系统
   </span>
-  <el-icon class="icon">
-    <Fold />
-  </el-icon>
-  <div class="f_right">
     <el-icon class="icon">
-      <Refresh />
+      <Fold />
     </el-icon>
-    <el-icon class="icon">
-      <FullScreen />
-    </el-icon>
-    <el-dropdown>
+    <div class="f_right">
+      <el-tooltip effect="dark" placement="bottom" content="刷新">
+        <el-icon class="icon">
+          <Refresh @click="refresh" />
+        </el-icon>
+      </el-tooltip>
+      <el-tooltip effect="dark" placement="bottom" :content="isFullscreen ? '退出全屏' : '全屏'">
+        <el-icon class="icon">
+          <FullScreen @click="toggle" />
+        </el-icon>
+      </el-tooltip>
+      <el-dropdown>
       <span>
         <el-avatar :size="30" :src="userStore.userInfo.avatar" />
         {{ userStore.userInfo.username }}
@@ -28,15 +38,15 @@ const userStore = useUserStore();
           <arrow-down />
         </el-icon>
       </span>
-      <template #dropdown>
-        <el-dropdown-menu>
-        <el-dropdown-item>修改密码</el-dropdown-item>
-        <el-dropdown-item>退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item>修改密码</el-dropdown-item>
+            <el-dropdown-item>退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
   </div>
-</div>
 </template>
 
 <style lang="scss" scoped>
@@ -45,12 +55,14 @@ const userStore = useUserStore();
   display: flex;
   color: #fff;
   align-items: center;
+
   .f_right {
     margin-left: auto;
     display: flex;
     align-items: center;
     height: 100%;
     padding-right: 20px;
+
     .el-dropdown {
       margin-left: 20px;
       color: #fff;
@@ -59,12 +71,14 @@ const userStore = useUserStore();
       span {
         display: flex;
         align-items: center;
+
         .el-avatar {
           margin-right: 10px;
         }
       }
     }
   }
+
   .logo {
     font-size: 18px;
     padding-right: 16px;
