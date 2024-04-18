@@ -4,12 +4,12 @@ import { ArrowDown, Fold, FullScreen, Refresh } from "@element-plus/icons-vue";
 import { useFullscreen } from "@vueuse/core";
 import { ElMessageBox, ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-import { reactive, ref } from "vue";
-import { editPasswordFn } from "@/api/login.js";
+import { useEditPassword } from "@/utils/UseEditPassword.js";
 
 const { toggle, isFullscreen } = useFullscreen();
 const userStore = useUserStore();
-const router = useRouter();
+const router = useRouter()
+const { dialogEditPassword,ruleFormEdit,rulesEdit,ruleFormRefEdit,editPasswordHandle } = useEditPassword()
 
 const refresh = () => {
   location.reload();
@@ -43,41 +43,6 @@ const commandHandle = async (res) => {
     }
   }
 }
-
-const dialogEditPassword = ref(false)
-
-const ruleFormEdit = reactive({
-  oldpassword: '',
-  password: '',
-  repassword: ''
-})
-
-const rulesEdit = reactive({
-  oldpassword: [{ required: true, message: '请输入原始密码', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
-  repassword: [{ required: true, message: '请再次输入新密码', trigger: 'blur' }],
-})
-
-const ruleFormRefEdit = ref(null)
-
-const editPasswordHandle = () => {
-  ruleFormRefEdit.value.validate(async isvalid => {
-    if(!isvalid) {
-      return;
-    }
-    const res = await editPasswordFn(ruleFormEdit);
-    if(res.msg != "ok") {
-      return ElMessage.error(res.msg)
-    }
-    ElMessage({
-      message: "密码修改成功",
-      type: 'success'
-    })
-    dialogEditPassword.value = false;
-  })
-}
-
-
 
 </script>
 
