@@ -12,3 +12,5 @@ html,body,#app {
 h1 {
   margin: 5px;
 }
+
+.el-tooltip__trigger { outline: none; }

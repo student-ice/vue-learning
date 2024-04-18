@@ -14,3 +14,11 @@ export const getUserInfoFn = () => {
     method: "POST"
   })
 }
+
+export const editPasswordFn = (data) => {
+  return request({
+    url: "/admin/editPassword",
+    method: "POST",
+    data
+  })
+}

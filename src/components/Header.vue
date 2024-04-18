@@ -2,9 +2,10 @@
 import { useUserStore } from "@/store/index.js";
 import { ArrowDown, Fold, FullScreen, Refresh } from "@element-plus/icons-vue";
 import { useFullscreen } from "@vueuse/core";
-import { ElMessageBox } from "element-plus";
+import { ElMessageBox, ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { reactive, ref } from "vue";
+import { editPasswordFn } from "@/api/login.js";
 
 const { toggle, isFullscreen } = useFullscreen();
 const userStore = useUserStore();
@@ -14,7 +15,7 @@ const refresh = () => {
   location.reload();
 };
 
-const handleCommand = async (res) => {
+const commandHandle = async (res) => {
   if (res === "editPassword"){
     dialogEditPassword.value = true
   }
@@ -60,8 +61,23 @@ const rulesEdit = reactive({
 const ruleFormRefEdit = ref(null)
 
 const editPasswordHandle = () => {
-  dialogEditPassword.value = false
+  ruleFormRefEdit.value.validate(async isvalid => {
+    if(!isvalid) {
+      return;
+    }
+    const res = await editPasswordFn(ruleFormEdit);
+    if(res.msg != "ok") {
+      return ElMessage.error(res.msg)
+    }
+    ElMessage({
+      message: "密码修改成功",
+      type: 'success'
+    })
+    dialogEditPassword.value = false;
+  })
 }
+
+
 
 </script>
 
@@ -84,7 +100,7 @@ const editPasswordHandle = () => {
           <FullScreen @click="toggle" />
         </el-icon>
       </el-tooltip>
-      <el-dropdown @command="handleCommand">
+      <el-dropdown @command="commandHandle">
         <span>
           <el-avatar :size="30" :src="userStore.userInfo.avatar" />
           {{ userStore.userInfo.username }}
@@ -152,6 +168,7 @@ const editPasswordHandle = () => {
         }
       }
     }
+
   }
 
   .logo {
