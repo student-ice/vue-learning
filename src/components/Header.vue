@@ -38,7 +38,7 @@ const commandHandle = async (res) => {
       // 删除token
       window.sessionStorage.removeItem("token")
       // 删除store 中的用户信息
-      userStore.setUserInfo({})
+      userStore.userInfo = {}
       router.push("/login")
     }
   }
