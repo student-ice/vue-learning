@@ -3,6 +3,9 @@ import { onBeforeMount } from "vue";
 import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
 import TagMenu from "@/components/TagMenu.vue";
+import { useUserStore } from "@/store/index.js";
+
+const userStore = useUserStore()
 
 onBeforeMount(async () => {
 });
@@ -15,7 +18,7 @@ onBeforeMount(async () => {
         <Header />
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside :width="userStore.isCollapse ? '64px' : '200px'">
           <Menu />
         </el-aside>
         <el-main>
@@ -34,9 +37,11 @@ onBeforeMount(async () => {
 
 .el-main {
   background: #F2F4F5;
+  height: 100%;
 }
 
 .el-aside {
   height: 100%;
+  background-color: #32363f;
 }
 </style>

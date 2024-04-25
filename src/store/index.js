@@ -4,7 +4,8 @@ import { getUserInfoFn } from "@/api/login.js";
 
 export const useUserStore = defineStore("useUserStore", () => {
   const userInfo = ref({});
-  const menus = ref([])
+  const menus = ref([]);
+  const isCollapse = ref(false)
 
   const getUserInfo = () => {
     return new Promise((resolve, reject) => {
@@ -20,6 +21,7 @@ export const useUserStore = defineStore("useUserStore", () => {
   return {
     userInfo,
     menus,
+    isCollapse,
     getUserInfo
   };
 });

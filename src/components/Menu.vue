@@ -14,7 +14,7 @@ const defaultActive = ref(route.path)
 </script>
 
 <template>
-<el-menu active-text-color="#409EFF" background-color="#32363f" text-color="#fff" unique-opened :collapse-transition="false" Router :default-active="defaultActive">
+<el-menu :collapse="userStore.isCollapse" active-text-color="#409EFF" background-color="#32363f" text-color="#fff" unique-opened :collapse-transition="false" Router :default-active="defaultActive">
   <el-sub-menu :index="item.id + ''" v-for="item in menus" :key="item.id">
     <template #title>
       <el-icon>

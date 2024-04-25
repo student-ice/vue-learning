@@ -52,7 +52,7 @@ const commandHandle = async (res) => {
       商城后台管理系统
     </span>
     <el-icon class="icon">
-      <Fold />
+      <Fold @click="userStore.isCollapse = !userStore.isCollapse"/>
     </el-icon>
     <div class="f_right">
       <el-tooltip effect="dark" placement="bottom" content="刷新">
