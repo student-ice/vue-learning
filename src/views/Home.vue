@@ -18,7 +18,7 @@ onBeforeMount(async () => {
         <Header />
       </el-header>
       <el-container>
-        <el-aside :width="userStore.isCollapse ? '64px' : '200px'">
+        <el-aside :width="userStore.isCollapse ? '63.2px' : '199.2px'">
           <Menu />
         </el-aside>
         <el-main>
@@ -42,6 +42,6 @@ onBeforeMount(async () => {
 
 .el-aside {
   height: 100%;
-  background-color: #32363f;
+  background: #32363f;
 }
 </style>
